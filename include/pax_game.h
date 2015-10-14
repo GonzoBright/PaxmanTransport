@@ -1,5 +1,5 @@
-#ifndef PAXMAN_TRANSPORT_H
-#define PAXMAN_TRANSPORT_H
+#ifndef PAX_GAME_H
+#define PAX_GAME_H
 
 
 class Game {
