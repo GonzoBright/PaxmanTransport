@@ -1,8 +1,15 @@
+/******************************************************************************
+*   pax_game.h
+*
+*	Handles basic game functions.
+******************************************************************************/
+
 #ifndef PAX_GAME_H
 #define PAX_GAME_H
 
-#include <SDL/SDL.h>
+#include <iostream>
 #include <GL/glew.h>
+#include <SDL/SDL.h>
 
 // Clean these up if possible
 enum class GameState {
@@ -17,9 +24,13 @@ private:
 	int height;
 	GameState game_state;
 
+	// Temporary Functions
+	void FatalError(char* error_string);
+
 	void Initialise();
 	void GameLoop();
 	void HandleInput();
+	void Render();
 
 public:
 	Game();
