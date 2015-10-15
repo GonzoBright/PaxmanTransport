@@ -18,7 +18,7 @@ Sprite::~Sprite()
 	}
 }
 
-void Sprite::Initialise(int x, int y, int width, int height)
+void Sprite::Initialise(float x, float y, float width, float height)
 {
 	this->x = x;
 	this->y = y;
@@ -60,7 +60,10 @@ void Sprite::Draw()
 {
 	glBindBuffer(GL_ARRAY_BUFFER, this->vboID);
 
-
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+	glDisableVertexAttribArray(0);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }

@@ -10,6 +10,7 @@
 #include <iostream>
 #include <SDL/SDL.h>
 #include <GL/glew.h>
+#include <pax_sprite.h>
 
 // Clean these up if possible
 enum class GameState {
@@ -23,6 +24,9 @@ private:
 	int width;
 	int height;
 	GameState game_state;
+
+	// Temporary members
+	Sprite sprite;
 
 	// Temporary Functions
 	void FatalError(char* error_string);

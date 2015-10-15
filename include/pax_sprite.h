@@ -11,10 +11,10 @@
 
 class Sprite {
 private:
-	int x;
-	int y;
-	int width;
-	int height;
+	float x;
+	float y;
+	float width;
+	float height;
 
 	/* Vertex buffer object */
 	GLuint vboID;
@@ -23,7 +23,7 @@ public:
 	Sprite();
 	~Sprite();
 
-	void Initialise(int x, int y, int width, int height);
+	void Initialise(float x, float y, float width, float height);
 
 	void Draw();
 };
