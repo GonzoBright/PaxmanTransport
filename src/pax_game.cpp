@@ -1,11 +1,49 @@
-#include <Windows.h>
+#include <pax_game.h>
 
-#include <SDL/SDL.h>
-//#include <GL/glew.h>
-
-int main(int argc, char** argv)
+Game::Game()
 {
-	//SDL_Init(SDL_INIT_EVERYTHING);
+	this->window = nullptr;
+	this->width = 1024;
+	this->height = 768;
+	this->game_state = GameState::GAME_PLAY;
+}
 
-	return 0;
+Game::~Game() 
+{
+	
+}
+
+void Game::Run()
+{
+	Initialise();
+	GameLoop();
+}
+
+void Game::Initialise()
+{
+	SDL_Init(SDL_INIT_EVERYTHING);
+
+	// I don't quite like the newline
+	this->window = SDL_CreateWindow("Paxman Engine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+		width, height, SDL_WINDOW_OPENGL);
+}
+
+void Game::GameLoop()
+{
+	while (game_state != GameState::GAME_EXIT) {
+		HandleInput();
+	}
+}
+
+void Game::HandleInput()
+{
+	SDL_Event e;
+	
+	while (SDL_PollEvent(&e)) {
+		switch (e.type) {
+		case SDL_QUIT:
+			this->game_state = GameState::GAME_EXIT;
+			break;
+		}
+	}
 }
