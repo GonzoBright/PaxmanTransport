@@ -5,8 +5,6 @@
 ******************************************************************************/
 
 #include <pax_game.h>
-#include <GL/glew.h>
-#include <SDL/SDL.h>
 
 Game::Game()
 {
@@ -40,18 +38,21 @@ void Game::Initialise()
 {
 	SDL_Init(SDL_INIT_EVERYTHING);
 
-	// I don't quite like the newline
+	// Create SDL Window
 	this->window = SDL_CreateWindow("Paxman Engine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
 		width, height, SDL_WINDOW_OPENGL);
 	if (this->window == nullptr) {
 		FatalError("SDL: Failed to create window properly.");
 	}
 
+	// Create GLContext
 	SDL_GLContext gl_context = SDL_GL_CreateContext(this->window);
 	if (gl_context == nullptr) {
 		FatalError("SDL_GL: Context failed to load properly.");
 	}
 
+	// Initialise GLEW
+	glewExperimental = true;
 	GLenum glew_result = glewInit();
 	if (glew_result != GLEW_OK) {
 		FatalError("GLEW: Failed to initialise GLEW.");
@@ -93,6 +94,7 @@ void Game::Render()
 	glClearDepth(1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	// Some very basic triangles indeed
 	glEnableClientState(GL_COLOR_ARRAY);
 	glBegin(GL_TRIANGLES);
 	glColor3f(1.0f, 0.0f, 0.0f);

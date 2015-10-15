@@ -8,8 +8,8 @@
 #define PAX_GAME_H
 
 #include <iostream>
-#include <GL/glew.h>
 #include <SDL/SDL.h>
+#include <GL/glew.h>
 
 // Clean these up if possible
 enum class GameState {
