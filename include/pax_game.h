@@ -26,6 +26,7 @@ private:
 	int width;
 	int height;
 	GameState game_state;
+	float time;
 
 	// Temporary members
 	Sprite sprite;

@@ -11,6 +11,7 @@
 //	- this->
 //	- Include placement, header with prototypes, other headers, dependencies
 //	- Get rid of strings where possible
+//	- Decent documentation
 //
 
 #include <iostream>

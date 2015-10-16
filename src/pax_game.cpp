@@ -13,6 +13,7 @@ Game::Game()
 	this->width = 1024;
 	this->height = 768;
 	this->game_state = GameState::GAME_PLAY;
+	this->time = 0;
 }
 
 Game::~Game() 
@@ -22,7 +23,7 @@ Game::~Game()
 void Game::Run()
 {
 	Initialise();
-	this->sprite.Initialise(-1.0f, -1.0f, 1.0f, 1.0f);
+	this->sprite.Initialise(-1.0f, -1.0f, 2.0f, 2.0f);
 	GameLoop();
 }
 
@@ -68,9 +69,10 @@ void Game::InitialiseShaders()
 	const char* colour_program_vert_file = "../res/shaders/colour_shading.vert";
 	const char* colour_program_frag_file = "../res/shaders/colour_shading.frag";
 	const char* vertex_position_attrib_name = "vertexPosition";
+	const char* colour_position_attrib_name = "vertexColour";
 	colour_program.CompileShaders(colour_program_vert_file, colour_program_frag_file);
-	std::cout << "bubbles" << std::endl;
 	colour_program.AddAttribute(vertex_position_attrib_name);
+	colour_program.AddAttribute(colour_position_attrib_name);
 	colour_program.LinkShaders();
 }
 
@@ -78,6 +80,7 @@ void Game::GameLoop()
 {
 	while (game_state != GameState::GAME_EXIT) {
 		HandleInput();
+		time += 0.005;
 		Render();
 	}
 }
@@ -104,6 +107,12 @@ void Game::Render()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	colour_program.Use();
+
+	// must set uniform(s) before rendering
+	// get rid of this madness
+	char* tmp = "time";
+	GLuint time_location = colour_program.GetUniformLocation(tmp);
+	glUniform1f(time_location, this->time);
 
 	this->sprite.Draw();
 

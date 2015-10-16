@@ -22,6 +22,8 @@ public:
 	void LinkShaders();
 	void AddAttribute(const char* &attribute_name);
 
+	GLuint GetUniformLocation(char* &uniform_name);
+
 	void Use();
 	void Disuse();
 };

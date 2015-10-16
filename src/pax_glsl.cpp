@@ -130,6 +130,17 @@ void GLSLProgram::AddAttribute(const char* &attribute_name)
 	glBindAttribLocation(program_ID, num_attributes++, attribute_name);
 }
 
+GLuint GLSLProgram::GetUniformLocation(char* &uniform_name)
+{
+	GLuint location = glGetUniformLocation(program_ID, uniform_name);
+	if (location == GL_INVALID_INDEX) {
+		// if uniform requested does not exist
+		// TODO: get rid of the fatal error in the near future
+		FatalError("Uniform: Uniform name not found in shader.");
+	}
+	return location;
+}
+
 void GLSLProgram::Use()
 {
 	glUseProgram(program_ID);
