@@ -6,6 +6,7 @@
 
 #include <pax_game.h>
 #include <pax_error.h>
+#include <pax_imageloader.h>
 
 Game::Game()
 {
@@ -24,6 +25,8 @@ void Game::Run()
 {
 	Initialise();
 	this->sprite.Initialise(-1.0f, -1.0f, 2.0f, 2.0f);
+
+	player_texture = ImageLoader::LoadPNG("../res/textures/jimmyJumpPack/PNG/CharacterRight_Standing.png");
 	GameLoop();
 }
 
@@ -111,7 +114,7 @@ void Game::Render()
 	// must set uniform(s) before rendering
 	// get rid of this madness
 	char* tmp = "time";
-	GLuint time_location = colour_program.GetUniformLocation(tmp);
+	GLint time_location = colour_program.GetUniformLocation(tmp);
 	glUniform1f(time_location, this->time);
 
 	this->sprite.Draw();

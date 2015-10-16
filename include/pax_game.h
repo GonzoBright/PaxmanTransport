@@ -13,6 +13,7 @@
 
 #include <pax_sprite.h>
 #include <pax_glsl.h>
+#include <pax_gltexture.h>
 
 // Clean these up if possible
 enum class GameState {
@@ -32,6 +33,9 @@ private:
 	Sprite sprite;
 
 	GLSLProgram colour_program;
+
+	// character_standing
+	GLTexture player_texture;
 
 	const char* colour_program_vert_file;
 	const char* colour_program_frag_file;
