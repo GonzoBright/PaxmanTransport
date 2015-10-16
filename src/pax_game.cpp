@@ -5,6 +5,7 @@
 ******************************************************************************/
 
 #include <pax_game.h>
+#include <pax_error.h>
 
 Game::Game()
 {
@@ -25,19 +26,12 @@ void Game::Run()
 	GameLoop();
 }
 
-void Game::FatalError(char* error_string)
-{
-	std::cout << error_string << std::endl;
-	std::cout << "Press any key to exit...";
-	int temp;
-	std::cin >> temp;
-	SDL_Quit();
-}
-
-
 void Game::Initialise()
 {
 	SDL_Init(SDL_INIT_EVERYTHING);
+
+	//SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+	//SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
 
 	// Create SDL Window
 	this->window = SDL_CreateWindow("Paxman Engine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
@@ -64,6 +58,20 @@ void Game::Initialise()
 
 	// Set background colour
 	glClearColor(0.0f, 0.0f, 1.0f, 0.0f);
+
+	// Initialise our shaders
+	InitialiseShaders();
+}
+
+void Game::InitialiseShaders()
+{
+	const char* colour_program_vert_file = "../res/shaders/colour_shading.vert";
+	const char* colour_program_frag_file = "../res/shaders/colour_shading.frag";
+	const char* vertex_position_attrib_name = "vertexPosition";
+	colour_program.CompileShaders(colour_program_vert_file, colour_program_frag_file);
+	std::cout << "bubbles" << std::endl;
+	colour_program.AddAttribute(vertex_position_attrib_name);
+	colour_program.LinkShaders();
 }
 
 void Game::GameLoop()
@@ -95,8 +103,11 @@ void Game::Render()
 	glClearDepth(1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	colour_program.Use();
+
 	this->sprite.Draw();
 
-	SDL_GL_SwapWindow(this->window);
+	colour_program.Disuse();
 
+	SDL_GL_SwapWindow(this->window);
 }

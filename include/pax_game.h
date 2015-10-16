@@ -10,7 +10,9 @@
 #include <iostream>
 #include <SDL/SDL.h>
 #include <GL/glew.h>
+
 #include <pax_sprite.h>
+#include <pax_glsl.h>
 
 // Clean these up if possible
 enum class GameState {
@@ -28,10 +30,14 @@ private:
 	// Temporary members
 	Sprite sprite;
 
-	// Temporary Functions
-	void FatalError(char* error_string);
+	GLSLProgram colour_program;
+
+	const char* colour_program_vert_file;
+	const char* colour_program_frag_file;
+	const char* vertex_position_attrib_name;
 
 	void Initialise();
+	void InitialiseShaders();
 	void GameLoop();
 	void HandleInput();
 	void Render();
